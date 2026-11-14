@@ -102,6 +102,15 @@ const pz = { marca: $('#pzMarca'), post: $('#pzPost'), reel: $('#pzReel'), tarje
 const caps = [$('#t0'), ...$$('.t1,.t2,.t3')];
 const pieEscena = $('#escenaPie');
 let heroI = 0, L = null, pActual = -1, pedido = false;
+/* En pantallas muy bajas (celular acostado) la historia no cabe: se muestra armada, sin quedar fija. */
+let HQ = STATIC;
+function decidirHQ() {
+  const antes = HQ;
+  HQ = STATIC || innerHeight - 56 < 470;
+  HTML.classList.toggle('hq', HQ && !STATIC);
+  if (antes && !HQ) { escena.style.removeProperty('--escena-h'); HTML.style.removeProperty('--escena-h'); }
+  if (HQ) caps.forEach(c => { c.style.opacity = ''; c.style.transform = ''; c.style.visibility = ''; });
+}
 
 function piezasDe(i) {
   const s = D.sellos[i], c = D.portafolio.find(x => x.id === s.id) || D.portafolio[0];
@@ -144,10 +153,10 @@ chips.addEventListener('click', e => {
 /* Medidas de la escena para el tamaño de pantalla actual. */
 function medir() {
   const W = escena.clientWidth;
-  const movil = W < 900;
+  const movil = W < 600 || (W < 900 && !HQ);   // celular acostado: composición horizontal
   const pieH = pieEscena.offsetHeight + 24;
   let s, SW, H, t0b, capB;
-  if (STATIC) {
+  if (HQ) {
     s = movil ? Math.min(W * .62, 330) : Math.min(W * .27, 420);
     H = movil ? Math.round(s * 2.15) : Math.round(s * 1.55);
     escena.style.setProperty('--escena-h', H + 'px'); HTML.style.setProperty('--escena-h', H + 'px');
@@ -157,14 +166,14 @@ function medir() {
     t0b = caps[0].offsetTop + caps[0].offsetHeight;
     capB = Math.max(...caps.slice(1).map(c => c.offsetTop + c.offsetHeight)) + 12;
     const alto = H - pieH - capB;
-    s = movil ? Math.min(W * .64, alto * .6, 340) : Math.min(W * .28, alto * .8, 440);
+    s = movil ? Math.min(W * .68, alto * .62, 360) : Math.min(W * .28, alto * .8, 440);
   }
   SW = movil ? Math.min(W * .8, 400) : Math.min(W * .36, 500);
   sello.style.width = SW + 'px';
   const sh = sello.offsetHeight;
   const tam = { marca: [s, s], post: [s * .72, s * .9], reel: [s * .54, s * .96], tarjeta: [s * .8, s * .5] };
   for (const k in tam) { pz[k].style.width = tam[k][0] + 'px'; pz[k].style.height = tam[k][1] + 'px'; }
-  const top = STATIC ? 0 : capB, bottom = STATIC ? H : H - pieH;
+  const top = HQ ? 0 : capB, bottom = HQ ? H : H - pieH;
   let C;
   if (movil) {
     const cy = top + (bottom - top) * .53, cx = W / 2;
@@ -176,7 +185,7 @@ function medir() {
       sello: { x: cx - .3 * s, y: cy - .6 * s, r: -6, k: (.66 * s) / SW },
     };
   } else {
-    const cy = (top + bottom) / 2 + (STATIC ? 0 : 6), cx = W / 2;
+    const cy = (top + bottom) / 2 + (HQ ? 0 : 6), cx = W / 2;
     C = {
       marca: { x: cx + .06 * s, y: cy, r: 0, k: 1 },
       post: { x: cx + .74 * s, y: cy + .04 * s, r: 6, k: 1 },
@@ -187,7 +196,7 @@ function medir() {
   }
   // A: el sello grande, solo, debajo del titular
   const yA = clamp(t0b + 28 + sh / 2, t0b + sh / 2, Math.max(t0b + sh / 2, H - sh / 2 - 16));
-  const A = { x: W / 2, y: STATIC ? 0 : yA, r: -3, k: 1 };
+  const A = { x: W / 2, y: HQ ? 0 : yA, r: -3, k: 1 };
   L = { W, H, s, SW, sh, tam, A, C, movil };
   haz.setAttribute('viewBox', `0 0 ${W} ${H}`);
 }
@@ -212,7 +221,7 @@ function poner(el, w, h, o) {
 const mezcla = (a, b, t) => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), r: lerp(a.r, b.r, t), k: lerp(a.k, b.k, t) });
 
 function progreso() {
-  if (STATIC) return 1;
+  if (HQ) return 1;
   const r = seccion.getBoundingClientRect();
   const recorrido = seccion.offsetHeight - pin.offsetHeight;
   return clamp(-(r.top - parseFloat(getComputedStyle(pin).top)) / recorrido, 0, 1);
@@ -224,7 +233,7 @@ function dibujar() {
   if (Math.abs(p - pActual) < .0005) return;
   pActual = p;
   // textos
-  if (!STATIC) {
+  if (!HQ) {
     const ent = (a, b) => tramo(p, a, b), sal = (a, b) => 1 - tramo(p, a, b);
     const vis = [sal(.03, .13), Math.min(ent(.11, .19), sal(.3, .37)), Math.min(ent(.35, .43), sal(.55, .61)), ent(.6, .68)];
     caps.forEach((c, i) => {
@@ -236,9 +245,9 @@ function dibujar() {
   }
   const { A, C, tam, SW, sh } = L;
   // 1) el sello se va a su esquina   2) la marca se proyecta desde él   3) llegan sus piezas
-  const t1 = STATIC ? 1 : tramo(p, .17, .34);
-  const t2 = STATIC ? 1 : tramo(p, .3, .5);
-  const t3 = STATIC ? 1 : tramo(p, .56, .8);
+  const t1 = HQ ? 1 : tramo(p, .17, .34);
+  const t2 = HQ ? 1 : tramo(p, .3, .5);
+  const t3 = HQ ? 1 : tramo(p, .56, .8);
   const S = mezcla(A, C.sello, t1);
   poner(sello, SW, sh, S);
   const desde = { x: C.sello.x, y: C.sello.y, r: C.sello.r, k: .08 };
@@ -264,7 +273,7 @@ function dibujar() {
       l.setAttribute('x1', s[0][0]); l.setAttribute('y1', s[0][1]); l.setAttribute('x2', s[1][0]); l.setAttribute('y2', s[1][1]);
     });
   }
-  pieEscena.classList.toggle('ver', STATIC || p > .3);
+  pieEscena.classList.toggle('ver', HQ || p > .3);
 }
 function pedir() { if (!pedido) { pedido = true; requestAnimationFrame(dibujar); } }
 addEventListener('scroll', pedir, { passive: true });
@@ -273,7 +282,7 @@ addEventListener('resize', () => {
   // el celular cambia el alto al esconder su barra: solo se re-mide si cambió el ancho o el alto cambió mucho
   if (innerWidth === anchoPrevio && Math.abs(innerHeight - altoPrevio) < 120) return;
   anchoPrevio = innerWidth; altoPrevio = innerHeight;
-  medir(); pActual = -1; dibujar(); luzSeg();
+  decidirHQ(); medir(); pActual = -1; dibujar(); luzSeg();
 });
 pintar(0);
 
@@ -597,7 +606,7 @@ const n = respondidas();
 if (n === P.length) terminar(false);
 else { paso = Math.min(n, P.length - 1); pintarPregunta(1); }
 
-const armar = () => { medir(); pActual = -1; dibujar(); luzSeg(); ajustarPie(); };
+const armar = () => { decidirHQ(); medir(); pActual = -1; dibujar(); luzSeg(); ajustarPie(); };
 armar();
 listo.then(armar);
 addEventListener('load', armar);
