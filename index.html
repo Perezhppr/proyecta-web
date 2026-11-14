@@ -6,7 +6,7 @@
 <title>PROYECTA · Marca personal para profesionales de salud</title>
 <meta name="description" content="Tú eres el experto, nosotros convertimos tu experiencia en una marca. Marca personal para médicos, nutricionistas y psicólogos, a distancia. Haz la revisión rápida de tu marca en 2 minutos.">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F4EFE6">
+<meta name="theme-color" content="#FAF9F6">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PROYECTA · Del sello a la marca">
 <meta property="og:description" content="Tú eres el experto, nosotros convertimos tu experiencia en una marca. Revisa tu marca en 2 minutos.">
@@ -14,8 +14,8 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<script>/* La animación de entrada se decide antes de pintar (?static la salta; ?anim la fuerza aunque el sistema pida menos movimiento). */
-(function(){var q=location.search,h=document.documentElement;h.classList.add('js');if(/[?&]static/.test(q)||matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]anim/.test(q))return;h.classList.add('intro-on');if(/[?&]t=/.test(q))h.classList.add('freeze')})();</script>
+<script>/* La pantalla de carga se decide antes de pintar (?static la salta; ?anim la fuerza aunque el sistema pida menos movimiento). */
+(function(){var q=location.search,h=document.documentElement;h.classList.add('js');if(/[?&]static/.test(q)||matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]anim/.test(q)){h.classList.add('quieto');return}h.classList.add('cargando');if(/[?&]t=/.test(q))h.classList.add('freeze')})();</script>
 <link rel="stylesheet" href="assets/css/estilos.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"PROYECTA","description":"Marca personal para profesionales de salud: médicos, nutricionistas y psicólogos. Servicio a distancia.","telephone":"+51 932 299 893","areaServed":"PE","knowsAbout":["Marca personal","Identidad visual","Contenido para redes"]}
@@ -34,115 +34,131 @@
     <!-- Tinta de sello: bordes que no son perfectos, como un sello de verdad. -->
     <filter id="tinta" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
       <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="ruido"/>
-      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="mov"/>
+      <feDisplacementMap in="SourceGraphic" in2="ruido" scale="2" xChannelSelector="R" yChannelSelector="G" result="mov"/>
       <feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="1" seed="3" result="manchas"/>
-      <feColorMatrix in="manchas" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.15" result="huecos"/>
+      <feColorMatrix in="manchas" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 2.2" result="huecos"/>
       <feComposite in="mov" in2="huecos" operator="in"/>
     </filter>
+    <linearGradient id="gHaz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5B2E" stop-opacity=".30"/><stop offset="1" stop-color="#FF5B2E" stop-opacity=".03"/></linearGradient>
   </defs>
 </svg>
 
-<header class="arriba">
-  <a class="logo" href="#inicio" aria-label="PROYECTA, ir al inicio">
-    <svg class="logo-m" aria-hidden="true"><use href="#marca"/></svg><span>PROYECTA</span>
-  </a>
-  <nav class="anclas" aria-label="Secciones">
-    <a href="#planes">Planes</a>
-    <a href="#portafolio">Portafolio</a>
-    <a href="#revision" class="anclas-cta">Revisión</a>
-  </nav>
+<!-- ============ PANTALLA DE CARGA: el logo se arma solo ============ -->
+<div class="carga" id="carga" aria-hidden="true">
+  <div class="carga-in">
+    <svg class="carga-m" viewBox="0 0 64 64">
+      <rect class="cm-sello" x="4" y="4" width="21" height="21" rx="2.5"/>
+      <path class="cm-haz" d="M24 6 L58 22" pathLength="1"/>
+      <path class="cm-haz" d="M6 24 L22 58" pathLength="1"/>
+      <rect class="cm-marco" x="23.5" y="23.5" width="33" height="33" rx="3" pathLength="1"/>
+    </svg>
+    <span class="carga-n" id="cargaN">PROYECTA</span>
+  </div>
+  <span class="carga-bar"><i id="cargaBar"></i></span>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#inicio" aria-label="PROYECTA, ir al inicio">
+      <svg class="logo-m" aria-hidden="true"><use href="#marca"/></svg><span>PROYECTA</span>
+    </a>
+    <nav class="anclas" aria-label="Secciones">
+      <a href="#planes">Planes</a>
+      <a href="#portafolio">Portafolio</a>
+      <a href="#revision">Revisión</a>
+    </nav>
+    <a class="nav-cta tap" href="#revision">Revisa tu marca</a>
+  </div>
 </header>
 
 <main>
 
-<!-- ============ INICIO ============ -->
-<section id="inicio" class="hero">
-  <div class="hero-txt">
-    <p class="hero-para">Marca personal para profesionales de salud</p>
-    <h1>
-      <span class="h1-a">Tú eres el experto.</span>
-      <span class="h1-b">Nosotros convertimos tu experiencia en una <span class="ancha" id="palabraMarca">marca</span>.</span>
-    </h1>
-    <div class="hero-acc">
-      <a class="btn btn-luz tap" href="#revision" id="heroCta">Revisa tu marca <span class="btn-min">2 min</span></a>
-      <p class="hero-nota">Médicos, nutricionistas y psicólogos.<br>Todo a distancia.</p>
+<!-- ============ INICIO: la historia del sello que se vuelve marca (queda fija mientras bajas) ============ -->
+<section id="inicio" class="historia">
+  <div class="pin" id="pin">
+    <div class="textos">
+      <div class="t t0" id="t0">
+        <p class="ojo">Marca personal para profesionales de salud</p>
+        <h1><span class="h1-l">Tú eres</span> <span class="h1-l">el experto.</span></h1>
+        <p class="bajada">Nosotros convertimos tu experiencia en una <span class="ancha" id="palabraMarca">marca</span>.</p>
+        <div class="acciones">
+          <a class="btn btn-pri tap" href="#revision" id="heroCta">Revisa tu marca</a>
+          <a class="btn-link" href="#planes">Ver planes <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+      <div class="t t1" aria-hidden="true"><h2>Hoy, tu marca<br>es tu <em>sello</em>.</h2><p>Lo que firmas cada día es lo único que te identifica.</p></div>
+      <div class="t t2" aria-hidden="true"><h2>Nosotros<br>lo <em>proyectamos</em>.</h2><p>Logo, colores y letras que salen de quién eres.</p></div>
+      <div class="t t3" aria-hidden="true"><h2>Y se vuelve<br>una <em>marca</em>.</h2><p>Que tus pacientes reconocen antes de leer tu nombre.</p></div>
     </div>
-  </div>
 
-  <div class="escena" id="escena">
-    <div class="chips" role="tablist" aria-label="Ver el ejemplo de">
-      <!-- se llenan desde datos.js -->
-    </div>
-    <div class="lienzo" id="lienzo">
-      <svg class="haz" id="haz" aria-hidden="true"><defs>
-        <linearGradient id="gHaz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF5B2E" stop-opacity=".34"/><stop offset="1" stop-color="#FF5B2E" stop-opacity=".04"/></linearGradient></defs>
-        <polygon id="hazLuz" fill="url(#gHaz)"/>
-        <line id="hazL1" pathLength="1"/><line id="hazL2" pathLength="1"/>
-      </svg>
-      <figure class="pantalla" id="pantalla">
-        <img id="pantallaImg" src="assets/img/portafolio/salud-identidad.webp" width="720" height="720" alt="Marca de demostración del Dr. Andrés Salazar, cardiólogo">
-      </figure>
-      <p class="lienzo-demo">Marca de<br>demostración</p>
+    <div class="escena" id="escena">
+      <svg class="haz" id="haz" aria-hidden="true"><polygon id="hazLuz" fill="url(#gHaz)"/><line id="hazL1"/><line id="hazL2"/></svg>
+      <img class="pz pz-post" id="pzPost" alt="" width="720" height="900">
+      <img class="pz pz-reel" id="pzReel" alt="" width="540" height="960">
+      <figure class="pz pz-marca" id="pzMarca"><img id="pzMarcaImg" alt="" width="720" height="720"></figure>
+      <img class="pz pz-tarjeta" id="pzTarjeta" alt="" width="720" height="450">
       <div class="sello" id="sello" aria-hidden="true">
         <div class="sello-in"><b class="sello-n"></b><span class="sello-o"></span><span class="sello-r"></span></div>
       </div>
     </div>
-    <p class="escena-pie" id="escenaPie">Su sello de siempre, <b>proyectado en marca.</b></p>
+
+    <div class="escena-pie" id="escenaPie">
+      <div class="seg" role="tablist" aria-label="Ver el ejemplo de" id="chips"><span class="seg-luz" aria-hidden="true"></span></div>
+      <p class="demo-nota">Marcas de demostración · personas ficticias</p>
+    </div>
   </div>
 </section>
 
 <!-- ============ SERVICIOS Y PAQUETES ============ -->
-<section id="planes" class="planes">
-  <div class="cab">
-    <h2>Tres planes. <span class="ancha">El mismo método.</span></h2>
-    <p>Todo se trabaja a distancia: coordinamos por WhatsApp, nos reunimos por Google Meet y recibes tus archivos editables en Canva.</p>
+<section id="planes" class="bloque planes">
+  <div class="cab rv">
+    <p class="ojo">Servicios y paquetes</p>
+    <h2>Tres planes.<br><span class="gris">El mismo método.</span></h2>
+    <p class="cab-p">Todo a distancia: coordinamos por WhatsApp, nos reunimos por Google Meet y recibes tus archivos editables en Canva.</p>
   </div>
-  <div class="cuadro-caja">
+  <div class="cuadro-caja rv">
     <table class="cuadro" id="cuadro">
       <caption class="sr">Qué incluye cada plan</caption>
-      <!-- se arma desde datos.js -->
     </table>
   </div>
-  <div class="elegido" id="elegido" aria-live="polite"><!-- resumen del plan elegido --></div>
+  <div class="elegido" id="elegido" aria-live="polite"></div>
   <p class="aviso">Precios de demostración en soles, para el proyecto.</p>
 </section>
 
 <!-- ============ PORTAFOLIO ============ -->
 <section id="portafolio" class="sala">
   <div class="proyector" aria-hidden="true"><svg class="proyector-m"><use href="#marca"/></svg></div>
-  <div class="cab cab-sala">
-    <h2>Del sello a la marca, <span class="ancha">en tres consultorios.</span></h2>
-    <p>Marcas de demostración: las personas son ficticias y las piezas están hechas para mostrar el método.</p>
+  <div class="cab cab-sala rv">
+    <p class="ojo">Portafolio de ejemplo</p>
+    <h2>Del sello a la marca,<br><span class="gris">en tres consultorios.</span></h2>
+    <p class="cab-p">Marcas de demostración: las personas son ficticias y las piezas están hechas para mostrar el método.</p>
   </div>
-  <div class="pestanas" role="tablist" aria-label="Categoría" id="pestanas"><span class="pestanas-luz" aria-hidden="true"></span></div>
-  <div class="caso" id="caso" role="tabpanel" aria-live="polite"><!-- se arma desde datos.js --></div>
+  <div class="pestanas rv" role="tablist" aria-label="Categoría" id="pestanas"><span class="pestanas-luz" aria-hidden="true"></span></div>
+  <div class="caso" id="caso" role="tabpanel" aria-live="polite"></div>
 </section>
 
 <!-- ============ REVISIÓN RÁPIDA Y CONTACTO ============ -->
-<section id="revision" class="revision">
-  <div class="cab">
-    <h2>Revisión rápida <span class="ancha">de tu marca.</span></h2>
-    <p>Siete preguntas, dos minutos. Al final te damos tu receta y nos la envías por WhatsApp si quieres conversar.</p>
+<section id="revision" class="bloque revision">
+  <div class="cab rv">
+    <p class="ojo">Revisión rápida</p>
+    <h2>¿Cómo está<br><span class="gris">tu marca hoy?</span></h2>
+    <p class="cab-p">Siete preguntas, dos minutos. Al final te damos tu receta y, si quieres conversar, nos la envías por WhatsApp.</p>
   </div>
 
   <div class="consulta" id="consulta">
-    <div class="test" id="test">
+    <div class="test rv" id="test">
       <div class="test-avance">
-        <svg class="test-haz" viewBox="0 0 300 36" preserveAspectRatio="none" aria-hidden="true">
-          <polygon class="test-haz-fondo" points="12,13 300,0 300,36 12,23"/>
-          <polygon class="test-haz-luz" id="testLuz" points="12,13 12,13 12,23 12,23"/>
-          <rect x="0" y="10" width="16" height="16" rx="2" class="test-haz-sello"/>
-        </svg>
-        <span id="testCuenta">Pregunta 1 de 7</span>
+        <span class="test-barra"><i id="testLuz"></i></span>
+        <span id="testCuenta">1 de 7</span>
       </div>
-      <div class="pregunta" id="pregunta" aria-live="polite"><!-- pregunta actual --></div>
+      <div class="pregunta" id="pregunta" aria-live="polite"></div>
       <div class="test-pie">
-        <button type="button" class="link tap" id="testAtras" hidden>← Atrás</button>
+        <button type="button" class="link tap" id="testAtras" hidden>‹ Atrás</button>
         <button type="button" class="link tap" id="testSaltar">Prefiero escribirles directo</button>
       </div>
     </div>
 
-    <article class="receta vacia" id="receta" aria-labelledby="recetaDx">
+    <article class="receta vacia rv" id="receta" aria-labelledby="recetaDx">
       <header class="receta-cab">
         <svg class="receta-m" aria-hidden="true"><use href="#marca"/></svg>
         <div><b>PROYECTA</b><span>Consultorio de marca personal</span></div>
@@ -157,7 +173,7 @@
         <h3 id="recetaDx">Completa la revisión para ver tu diagnóstico</h3>
         <p id="recetaReq"></p>
       </div>
-      <div class="signos" id="signos"><!-- signos vitales --></div>
+      <div class="signos" id="signos"></div>
       <div class="rp">
         <span class="rp-et" aria-label="Indicaciones">Rp/</span>
         <ol id="rpLista"><li class="vacio"></li><li class="vacio"></li><li class="vacio"></li></ol>
@@ -172,23 +188,24 @@
     </article>
   </div>
 
-  <form class="contacto" id="contacto" novalidate>
+  <form class="contacto rv" id="contacto" novalidate>
     <div class="contacto-cab">
-      <h3>Envíanos tu receta</h3>
+      <h3>Envíanos tu receta.</h3>
       <p>Abrimos WhatsApp con tu mensaje listo. Tú decides si lo envías.</p>
+      <p class="resultado-linea"><span>Resultado</span> <b id="fResultado">Sin revisión</b></p>
     </div>
     <div class="campos">
-      <label class="campo"><span>Nombre</span>
+      <label class="campo campo-ancho"><span>Nombre</span>
         <input id="fNombre" name="nombre" autocomplete="name" placeholder="Ej. Ana Torres" required></label>
       <label class="campo"><span>Profesión</span>
         <select id="fProfesion" name="profesion"></select></label>
       <label class="campo"><span>Tus redes <i>(opcional)</i></span>
-        <input id="fRedes" name="redes" placeholder="@tuusuario o el link de tu perfil" autocomplete="url"></label>
+        <input id="fRedes" name="redes" placeholder="@tuusuario o el link" autocomplete="url"></label>
       <label class="campo"><span>Objetivo</span>
         <select id="fObjetivo" name="objetivo"></select></label>
       <label class="campo"><span>Plan que te interesa</span>
         <select id="fPlan" name="plan"></select></label>
-      <fieldset class="campo">
+      <fieldset class="campo campo-ancho">
         <legend>Prefiero que conversemos por</legend>
         <div class="selector" id="fCanal">
           <span class="selector-luz" aria-hidden="true"></span>
@@ -196,13 +213,12 @@
           <label><input type="radio" name="canal" value="meet"><span>Google Meet</span></label>
         </div>
       </fieldset>
+      <button class="btn btn-wa tap campo-ancho" id="enviar" type="submit">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3Z"/></svg>
+        <span id="enviarTxt">Enviar por WhatsApp</span>
+      </button>
+      <p class="contacto-nota campo-ancho">Llega al WhatsApp de PROYECTA: <a href="https://api.whatsapp.com/send?phone=51932299893" id="waDirecto">932 299 893</a></p>
     </div>
-    <p class="resultado-linea"><span>Resultado</span> <b id="fResultado">Sin revisión</b></p>
-    <button class="btn btn-wa tap" id="enviar" type="submit">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3Z"/></svg>
-      Enviar por WhatsApp
-    </button>
-    <p class="contacto-nota">Llega al WhatsApp de PROYECTA: <a href="https://api.whatsapp.com/send?phone=51932299893" id="waDirecto">932 299 893</a></p>
   </form>
 </section>
 
@@ -210,12 +226,10 @@
 
 <footer class="pie" id="pie">
   <p class="pie-grande" id="pieGrande" aria-hidden="true">PROYECTA</p>
-  <p class="pie-frase">Tú eres el experto. Nosotros convertimos tu experiencia en una marca.</p>
-  <ul class="pie-links" id="pieLinks"><!-- WhatsApp y redes desde datos.js --></ul>
+  <p class="pie-frase">Tú eres el experto.<br><span class="gris">Nosotros convertimos tu experiencia en una marca.</span></p>
+  <ul class="pie-links" id="pieLinks"></ul>
   <p class="pie-legal">Proyecto académico. Las marcas del portafolio, las personas, las colegiaturas y los precios son de demostración.</p>
 </footer>
-
-<a class="flota tap" id="flota" href="#revision">Revisa tu marca <span>2 min</span></a>
 
 <div class="hoja" id="hoja" hidden>
   <div class="hoja-pane" role="dialog" aria-modal="true" aria-label="Pieza del portafolio">
