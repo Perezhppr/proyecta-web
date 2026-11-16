@@ -129,7 +129,7 @@ function pintar(i) {
 }
 D.sellos.forEach((_, i) => { const k = piezasDe(i); [k.marca, k.post, k.reel, k.tarjeta].forEach(src => { const im = new Image(); im.src = src; }); });
 
-/* Selector Médico / Nutricionista / Psicólogo */
+/* Selector Médico / Abogada / Arquitecto */
 const chips = $('#chips');
 chips.insertAdjacentHTML('beforeend', D.sellos.map((s, i) => `<button type="button" role="tab" aria-selected="${i === 0}" data-i="${i}">${s.chip}</button>`).join(''));
 function luzSeg() {
@@ -309,7 +309,7 @@ function elegirPlan(id, anim) {
   $$('thead th[data-plan]', cuadro).forEach(th => th.classList.toggle('es-receta', th.dataset.plan === planReceta));
   const p = planDe(id);
   const el = $('#elegido');
-  el.innerHTML = `<div class="elegido-txt"><b>${p.nombre} <span class="nw">${soles(p.precio)}</span></b><span>${p.para}${p.id === planReceta ? ' Es el que sugiere tu receta.' : ''}</span></div>
+  el.innerHTML = `<div class="elegido-txt"><b>${p.nombre} <span class="nw">${soles(p.precio)}</span></b><span>${p.para}${p.id === planReceta ? ' Es el que sugiere tu diagnóstico.' : ''}</span></div>
     <button type="button" class="btn tap" id="loQuiero">Lo quiero</button>`;
   if (anim) restart(el, 'elegido-anim');
   $('#loQuiero').addEventListener('click', () => { fPlan.value = id; guardarForm(); irA('#contacto', fNombre); });
@@ -468,8 +468,8 @@ function terminar(anim) {
   const r = resultado;
   avance(1);
   $('#testCuenta').textContent = 'Listo';
-  preg.innerHTML = `<div class="test-hecho"><h3>Tu receta está lista.</h3>
-    <p>${r.etapa}. La calculamos con tus 7 respuestas; nadie la ve hasta que tú la envíes.</p>
+  preg.innerHTML = `<div class="test-hecho"><h3>Tu diagnóstico está listo.</h3>
+    <p>${r.etapa}. Lo calculamos con tus 7 respuestas; nadie lo ve hasta que tú lo envíes.</p>
     <button type="button" class="link tap" id="repetir">Repetir la revisión</button></div>`;
   $('#testAtras').hidden = true;
   $('#repetir').addEventListener('click', () => {
