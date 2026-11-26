@@ -16,7 +16,7 @@
 <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <script>/* La pantalla de carga se decide antes de pintar (?static la salta; ?anim la fuerza aunque el sistema pida menos movimiento). */
 (function(){var q=location.search,h=document.documentElement;h.classList.add('js');if(/[?&]static/.test(q)||matchMedia('(prefers-reduced-motion: reduce)').matches&&!/[?&]anim/.test(q)){h.classList.add('quieto');return}h.classList.add('cargando');if(/[?&]t=/.test(q))h.classList.add('freeze')})();</script>
-<link rel="stylesheet" href="assets/css/estilos.css?v=20261116">
+<link rel="stylesheet" href="assets/css/estilos.css?v=20261125">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"PROYECTA","description":"Marca personal para profesionales de cualquier rubro: salud, derecho, arquitectura, ingeniería, contabilidad y más. Servicio a distancia.","telephone":"+51 932 299 893","areaServed":"PE","knowsAbout":["Marca personal","Identidad visual","Contenido para redes"]}
 </script>
@@ -218,6 +218,7 @@
         <span id="enviarTxt">Enviar por WhatsApp</span>
       </button>
       <p class="contacto-nota campo-ancho">Llega al WhatsApp de PROYECTA: <a href="https://api.whatsapp.com/send?phone=51932299893" id="waDirecto">932 299 893</a></p>
+      <p class="contacto-privacidad campo-ancho" id="privacidad">Tus respuestas y tus datos se guardan solo en este navegador, para que no los pierdas. No los enviamos a ningún servidor: solo nos llegan si tú envías el mensaje por WhatsApp (Ley 29733, de Protección de Datos Personales). <button type="button" class="link tap" id="borrarDatos">Borrar mis datos</button></p>
     </div>
   </form>
 </section>
@@ -239,7 +240,7 @@
   </div>
 </div>
 
-<script src="assets/js/datos.js?v=20261116"></script>
-<script src="assets/js/app.js?v=20261116"></script>
+<script src="assets/js/datos.js?v=20261125"></script>
+<script src="assets/js/app.js?v=20261125"></script>
 </body>
 </html>

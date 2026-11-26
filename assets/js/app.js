@@ -300,7 +300,11 @@ cuadro.insertAdjacentHTML('beforeend',
   <tbody>${D.cuadro.map(f => f.grupo
     ? `<tr class="grupo"><th colspan="${D.planes.length + 1}" scope="colgroup">${f.grupo}</th></tr>`
     : `<tr><th scope="row">${f.item}</th>${f.v.map(v => `<td>${v === true ? SI : v === false ? NO : v}</td>`).join('')}</tr>`).join('')}</tbody>`);
-cuadro.addEventListener('click', e => { const b = e.target.closest('.plan-btn'); if (b) elegirPlan(b.dataset.plan, true); });
+cuadro.addEventListener('click', e => {
+  const b = e.target.closest('.plan-btn'); if (!b) return;
+  elegirPlan(b.dataset.plan, true);
+  fPlan.value = b.dataset.plan; guardarForm();   // el plan que toca queda también en el formulario
+});
 function elegirPlan(id, anim) {
   planSel = id;
   const idx = D.planes.findIndex(p => p.id === id);
@@ -469,7 +473,7 @@ function terminar(anim) {
   avance(1);
   $('#testCuenta').textContent = 'Listo';
   preg.innerHTML = `<div class="test-hecho"><h3>Tu diagnóstico está listo.</h3>
-    <p>${r.etapa}. Lo calculamos con tus 7 respuestas; nadie lo ve hasta que tú lo envíes.</p>
+    <p>${r.dx} Lo calculamos con tus 7 respuestas; nadie lo ve hasta que tú lo envíes.</p>
     <button type="button" class="link tap" id="repetir">Repetir la revisión</button></div>`;
   $('#testAtras').hidden = true;
   $('#repetir').addEventListener('click', () => {
@@ -529,6 +533,15 @@ function pacienteEnReceta() { $('#recPaciente').textContent = fNombre.value.trim
   pacienteEnReceta();
   if (fProfesion.value) $('#recProfesion').textContent = fProfesion.value;
 })();
+// "Borrar mis datos": borra lo guardado en este navegador, limpia el formulario y la revisión
+$('#borrarDatos').addEventListener('click', () => {
+  store.del('proyecta.resp'); store.del('proyecta.form');
+  form.reset(); $('#fCanal').classList.remove('der');
+  pacienteEnReceta(); $('#recProfesion').textContent = ' ';
+  const repetir = $('#repetir'); if (repetir) repetir.click();
+  store.del('proyecta.resp'); store.del('proyecta.form');
+  $('#borrarDatos').textContent = 'Listo: datos borrados';
+});
 form.addEventListener('input', e => {
   if (e.target === fNombre) { pacienteEnReceta(); fNombre.closest('.campo').classList.remove('falta'); }
   if (e.target === fProfesion) $('#recProfesion').textContent = fProfesion.value || ' ';
